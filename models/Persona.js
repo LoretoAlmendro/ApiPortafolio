@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 // import { sequelize } from "../data/db_connectios.js";
 import { sequelize } from "../db_connectios.js";
-export
+import {region} from "./Region.js";
 
 class Persona extends Model { }
 
@@ -22,8 +22,6 @@ export const persona = Persona.init({
              allowNull: false},
     comuna:{type: DataTypes.TEXT,
             allowNull: false },
-    region:{type: DataTypes.TEXT,
-            allowNull: false },
     estudiante:{type: DataTypes.TEXT,
             allowNull: false},
   
@@ -34,3 +32,12 @@ export const persona = Persona.init({
     } 
 
 );
+
+region.hasMany(persona, {
+        foreignKey:"regionId",
+        sourceKey: "id",
+});
+persona.belongsTo(region,{
+        foreignKey:"regionId",
+        targetKey:"id",
+});

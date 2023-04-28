@@ -6,6 +6,7 @@ class Region extends Model { }
 
 export const region = Region.init({
     name: { type: DataTypes.TEXT },
+    regionId: {type: DataTypes.INTEGER}
 },
     {
         sequelize, modelName: "Regions",

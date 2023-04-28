@@ -13,8 +13,8 @@ app.use(express.json());
 async function main() {
   try {
     await sequelize.sync()
-    app.listen(4000);
-    console.log('Servido arriba puerto 4000');
+    app.listen(4001);
+    console.log('Servido arriba puerto 4001');
   } catch (error) {
     console.error("Onable to connect to the database",error);
   }
@@ -39,6 +39,8 @@ app.get("/api/region", async (req, res) => {
     res.status(500).json({ message: 'Error al obtener regiones' });
   }
 });
+
+
 
 app.delete("/api/region/:id", async (req,res) => {
     try{
@@ -65,13 +67,13 @@ app.delete("/api/region/:id", async (req,res) => {
 
 app.post("/api/persona", async (req, res) => {
   try {
-    const { nombre, apellido, mail, formacion, edad, comuna, region, estudiante } = req.body;
+    const { nombre, apellido, mail, formacion, edad, comuna, regionId, estudiante } = req.body;
     const existeUsuario = await persona.findOne({where: {mail}})
     if (existeUsuario){
       return res.status(409).json ({error: 'El usuario ya existe'})
     }
     const nuevoUsuario = await persona.create({
-      nombre, apellido, mail, formacion, edad, comuna, region, estudiante
+      nombre, apellido, mail, formacion, edad, comuna, regionId, estudiante
     })
   } catch (err) {
     console.error(err);
@@ -80,16 +82,17 @@ app.post("/api/persona", async (req, res) => {
 });
 
 
-app.put("/api/region/:id", async (req, res) => {
-  const { id } = req.params;
-  const { name } = req.body;
+app.put("/api/actualizacion/:id", async (req, res) => {
   try {
-    const regiones = await region.findByPk(id);
-    if (!regiones)  {
-      return res.status(404).json({ message: 'Region no encontrada' });
+    const { id } = req.params;
+    console.log(id)
+    const { nombre, apellido, mail, formacion, edad, comuna, region, estudiante  } = req.body;
+    const personaToUpdate = await persona.findOne({where:{id:id}});
+    if (!personaToUpdate)  {
+      return res.status(404).json({ message: 'Usuario no encontrada' });
     }
-    await regiones.update({ name });
-    res.json(regiones);
+    await personaToUpdate.update({nombre, apellido, mail, formacion, edad, comuna, region, estudiante});
+    res.json(personaToUpdate);
   } 
  
   catch (err) {
