@@ -1,3 +1,4 @@
+import { persona } from "../models/Persona.js";
 import { region } from "../models/Region.js";
 
 const getRegion = async (req, res) => {
@@ -22,4 +23,5 @@ const createRegion = async (req, res) => {
     }
 };
 
-export { getRegion, createRegion };
+
+export { getRegion, createRegion, };

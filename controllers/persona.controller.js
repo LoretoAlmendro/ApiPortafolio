@@ -1,4 +1,5 @@
 import { persona } from "../models/Persona.js";
+import { region } from "../models/Region.js";
 
 const getPerson = async (req, res) => {
     try {
@@ -49,4 +50,5 @@ const deletePerson = async (req, res) => {
     }
 };
 
-export { getPerson, createPerson, updatePerson, deletePerson };
+
+export { getPerson, createPerson, updatePerson, deletePerson,};

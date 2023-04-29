@@ -45,6 +45,24 @@ app.get("/api/region", async (req, res) => {
 });
 
 
+//JOIN TABLAS
+app.get("/regiones/personas", async (req,res) => {
+    try {
+      const data = await persona.findAll({
+        include: [
+          {
+            model: region,
+            as: "Region",
+          },
+        ],
+      });
+      console.log(data);
+      res.json(data);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
+)
 
 app.delete("/api/region/:id", async (req,res) => {
   
