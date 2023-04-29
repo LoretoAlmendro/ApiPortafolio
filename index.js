@@ -1,11 +1,15 @@
 import express  from "express"
 import pg from "pg"
+import cors from "cors"
 const app =express()
 import dotenv from "dotenv";
 // import { Sequelize } from "sequelize";
 dotenv.config();
 // import { sequelize } from "./db_connectios.js";
 app.use(express.json());
+app.use(cors({
+  origin: '*'
+}));
 
 
 //puerto
@@ -43,38 +47,36 @@ app.get("/api/region", async (req, res) => {
 
 
 app.delete("/api/region/:id", async (req,res) => {
-    try{
-        const elementId = req.params.id;
-        const resultado = await region.findByPk(elementId).then(data => {
-            if(!data) {
-                return next(new Error('Registro no existe'));
-            }
-            return region.destroy({where:{id: elementId}});
-        })
-        .then(() => {
-            console.log('Dato destruido');
-            res.status(200).json({message: 'Success'});
-        })
-        .catch(err => {
-            res.status(500).json({message: 'Fallo borrar dato'})
-        })
-    } catch (err) {
-        next (err);
+  
+    try {
+      const { id } = req.params;
+      await persona.destroy({
+        where: {
+          id,
+        },
+      });
+      console.log('Producto eliminado con éxito')
+      res.status(204).send();
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
     }
+  
         
 });
 
 
 app.post("/api/persona", async (req, res) => {
   try {
-    const { nombre, apellido, mail, formacion, edad, comuna, regionId, estudiante } = req.body;
+    const { nombre, apellido, formacion, edad, comuna, estudiante, mail, regionId } = req.body;
     const existeUsuario = await persona.findOne({where: {mail}})
     if (existeUsuario){
       return res.status(409).json ({error: 'El usuario ya existe'})
     }
     const nuevoUsuario = await persona.create({
-      nombre, apellido, mail, formacion, edad, comuna, regionId, estudiante
+      nombre, apellido, formacion, edad, comuna, estudiante, mail, regionId
     })
+    console.log(nuevoUsuario)
+    res.json(nuevoUsuario)
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error al crear la persona' });
@@ -85,19 +87,20 @@ app.post("/api/persona", async (req, res) => {
 app.put("/api/actualizacion/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id)
-    const { nombre, apellido, mail, formacion, edad, comuna, region, estudiante  } = req.body;
-    const personaToUpdate = await persona.findOne({where:{id:id}});
-    if (!personaToUpdate)  {
-      return res.status(404).json({ message: 'Usuario no encontrada' });
-    }
-    await personaToUpdate.update({nombre, apellido, mail, formacion, edad, comuna, region, estudiante});
-    res.json(personaToUpdate);
-  } 
- 
-  catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error al actualizar regiones' });
+    const { nombre, apellido, formacion, edad, comuna, estudiante, mail, regionId} = req.body;
+    const personas = await persona.findByPk(id);
+   personas.nombre = nombre;
+   personas.apellido = apellido;
+   personas.formacion = formacion;
+   personas.edad = edad;
+   personas.comuna = comuna;
+   personas.estudiante = estudiante;
+   personas.mail = mail;
+   personas.regionId = regionId;
+    await personas.save();
+    res.json (personas);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 });
 
