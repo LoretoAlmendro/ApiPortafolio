@@ -31,7 +31,7 @@ import {persona} from './models/Persona.js'
 import { sequelize } from "./db_connectios.js";
 
 
-
+//CLÁUSULAS DE ORDENAMIENTO
 app.get("/api/region", async (req, res) => {
   try {
     const personas = await persona.findAll({
@@ -63,7 +63,7 @@ app.get("/regiones/personas", async (req,res) => {
     }
   }
 )
-
+//Filtro información WHERE
 app.delete("/api/region/:id", async (req,res) => {
   
     try {
@@ -82,7 +82,7 @@ app.delete("/api/region/:id", async (req,res) => {
         
 });
 
-
+//SELECIÓN DATOS COLUMNAS REQUERIDAS
 app.post("/api/persona", async (req, res) => {
   try {
     const { nombre, apellido, formacion, edad, comuna, estudiante, mail, regionId } = req.body;
