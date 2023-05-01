@@ -13,13 +13,17 @@ emprendedores, estudiantes, etc.
 ### 📱 Front-End 
 Permite a los usuarios/as interactuar con las distintas definiciones y términos del color.
 
-![Front](https://user-images.githubusercontent.com/19751976/235373866-fa9f133b-a4fa-4be4-84b5-16b3f749ac71.png)
+![front](https://user-images.githubusercontent.com/119952622/235475156-d7fb797c-a5c9-4ec1-8bba-e658b016587b.jpg)
+
 
 
 ### 🖥️ Back-End 
 Permite a la administradora llevar un registro o catástro de quienes han ingresado en la aplicación. 
 
-![Back](https://user-images.githubusercontent.com/19751976/235373874-c2d64bda-eecf-4e49-a42c-6093a4c381a1.png)
+![backend](https://user-images.githubusercontent.com/119952622/235475195-2331ef62-d0f9-41ae-982b-f8bfb583bfad.jpg)
+
+
+![backend2](https://user-images.githubusercontent.com/119952622/235475224-6698c778-8016-40d5-8c32-dd3af3190289.jpg)
 
 
 
@@ -95,6 +99,10 @@ Permite a la administradora llevar un registro o catástro de quienes han ingres
 
 
 8. Rúbrica de evaluación
+
+*Los puntos en donde no hayan menciones es porque se encuentran en el general del proyecto.
+
+
 1.-Consulta a la base de datos
 1.a.-Selecciona las columnas requeridas para presentar la información solicitada
 (API_portafolio/index.js)
